@@ -5,9 +5,6 @@ import Data.salary;
 
 import javax.swing.*;
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 public class SalaryController implements SimpleController {
@@ -33,7 +30,6 @@ public class SalaryController implements SimpleController {
                 JOptionPane.showMessageDialog(null, "LỖI NHẬP DỮ LIỆU SALARY !! CÓ VẺ NHƯ DỮ LIỆU CỦA BẠN BỊ LỖI, HÃY KIỂM TRA");
             }
         }
-        System.out.println("Đọc dữ liệu thành công !");
         return salaries;
     }
 

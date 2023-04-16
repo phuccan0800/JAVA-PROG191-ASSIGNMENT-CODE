@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.nio.file.Files;
 
 public class EmployeesController implements SimpleController {
     public Employees[] AddEmployeesData(){
@@ -101,7 +102,7 @@ public class EmployeesController implements SimpleController {
             fileWriter.close();
             inputFile.delete();
             tempFile.renameTo(inputFile);
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Đã xảy ra lỗi khi xóa dòng khỏi tệp " + fileName);
         }
     }

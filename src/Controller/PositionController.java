@@ -2,10 +2,8 @@ package Controller;
 
 import Data.position;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class PositionController {
@@ -28,7 +26,6 @@ public class PositionController {
                     System.out.println("Lỗi lấy dữ liệu");
                 }
             }
-            System.out.println("Đọc dữ liệu thành công !");
             return positions;
     }
 }

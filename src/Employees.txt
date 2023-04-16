@@ -1,6 +1,0 @@
-1|1|Trương Tấn Phúc|Male|12/05/2003|Quảng Bình|123819283|0916430598|phuccan0800@gmail.com|12/05/2021|password
-2|2|Nguyễn Quang Ngọc|Male|12/05/2003|Quảng Bình|12391289372|0916430598|ngn@gmail.com|12/05/2021|password
-3|1|Nguyễn Trần Khánh Vinh|Female|01/06/2003|Lệ Thủy, Quảng Bình|0916410598|1911890117|phuccan0800@gmail.com|11/05/1011|password
-4|3|Nguyễn Trọng Thụ|Female|12/05/2003|Lệ Thủy, Quảng Bình|12937219372|9312367166|y98hd9hd@gmail.com|12/05/2003|pasword
-5|3|Tester |Male|20/12/2021|12543|123123123|123123352|qsasd@gmail.com|20/12/2021|41
-6|3|Tester 2|Male|20/32/2023|32543|323323323|323323352|qsasd@gmail.com|20/32/2023|53
