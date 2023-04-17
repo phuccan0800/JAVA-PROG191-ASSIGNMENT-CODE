@@ -25,6 +25,14 @@ public class Dasboard extends javax.swing.JFrame {
     static SalaryController salaryController = new SalaryController();
     static Project[] projects = new Project[1000];
     static ProjectController projectController = new ProjectController();
+    static int usercheck = 0;
+    static int userAuth = 0;
+    static Integer[] savePositionInformationTable = new Integer[1000];
+    static int numberOfSavePositionInformationTable = 0;
+    static Integer[] savePositionSalaryTable = new Integer[1000];
+    static int numberOfSavePositionSalaryTable= 0;
+    static Integer[] savePositionProjectTable = new Integer[1000];
+    static int numberOfSaveProjectTable= 0;
     /**
      * Creates new form NewJFrame
      */
@@ -1124,36 +1132,13 @@ public class Dasboard extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null, null}
-                },
-                new String [] {
-                        "ID", "Tên dự án", "Nội dung ", "Người được giao", "Ngày giao", "Ngày hết hạn ", "Tình trạng ", "Kết quả", "Loại dự án"
-                }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                    false, false, false, false, false, true, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane4.setViewportView(jTable2);
-
-        jTabbedPane1.addTab("Thành tích của bạn", jScrollPane4);
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
                         {null, null, null, null, null, null, null},
                         {null, null, null, null, null, null, null},
                         {null, null, null, null, null, null, null},
                         {null, null, null, null, null, null, null}
                 },
                 new String [] {
-                        "ID", "Tên dự án", "Thông tin dự án", "Sơ đồ phân công", "Ngày bắt đầu", "Ngày kết thúc", "Tình trạng"
+                        "ID", "Tên dự án", "Nội dung ", "Người giao", "Ngày giao", "Ngày hết hạn ", "Tình trạng "
                 }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1164,9 +1149,42 @@ public class Dasboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jTable2);
+
+        jTabbedPane1.addTab("Công việc được giao", jScrollPane4);
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null}
+                },
+                new String [] {
+                        "ID", "Tên dự án", "Thông tin dự án", "Loại dự án", "Ngày bắt đầu", "Ngày kết thúc", "Tình trạng", "Kết quả"
+                }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable3MouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(jTable3);
 
-        jTabbedPane1.addTab("Công việc được giao", jScrollPane5);
+        jTabbedPane1.addTab("Thành tích của bạn", jScrollPane5);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_user_50px_2.png"))); // NOI18N
         jButton5.setText("Thông tin cá nhân");
@@ -1458,8 +1476,10 @@ public class Dasboard extends javax.swing.JFrame {
         jPanel3.setVisible(true);
         int row = 0;
         row = InformationTable.getSelectedRow();
-        nameTxt.setText(employees[row].getName());
-        if (Objects.equals(employees[row].getSex(), "Male")) {
+        System.out.println("o day "+numberOfSavePositionInformationTable);
+        for (int i=0; i<numberOfSavePositionInformationTable; i++) System.out.println(savePositionInformationTable[i]);
+        nameTxt.setText(employees[savePositionInformationTable[row]].getName());
+        if (Objects.equals(employees[savePositionInformationTable[row]].getSex(), "Male")) {
             sex.setSelectedIndex(0);
         }
         else sex.setSelectedIndex(1);
@@ -1477,9 +1497,12 @@ public class Dasboard extends javax.swing.JFrame {
                     "Tên ảnh cần thêm là: " + employees[row].getAvatar());
         }
         int j = positions[0].numberOfPositionID;
-        String input[] = new String[j];
+        String input[] = new String[j-usercheck];
+        int d= usercheck;
+        j=j-usercheck;
         for (int i = 0; i < j; i++) {
-            input[i] = positions[i].getPosition();
+            input[i] = positions[d].getPosition();
+            d++;
         }
         DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<String>(input);
         positionSelect.setModel(comboBoxModel);
@@ -1501,6 +1524,7 @@ public class Dasboard extends javax.swing.JFrame {
         AddNewUser.setVisible(false);
         int row = 0;
         row = jTable1.getSelectedRow();
+        row = savePositionSalaryTable[row];
         jLabel28.setText(employees[row].getName());
         jLabel35.setText(String.valueOf(employees[row].getID()));
         jLabel36.setText(String.valueOf(salaries[row].getDayWork())+ " Ngày");
@@ -1682,10 +1706,13 @@ public class Dasboard extends javax.swing.JFrame {
         jPanel3.setVisible(false);
         jPanel4.setVisible(false);
         AddNewUser.setVisible(true);
-        int j = position.numberOfPositionID;
-        String input[] = new String[j];
+        int j = positions[0].numberOfPositionID;
+        String input[] = new String[j-usercheck];
+        int d= usercheck;
+        j=j-usercheck;
         for (int i = 0; i < j; i++) {
-            input[i] = positions[i].getPosition();
+            input[i] = positions[d].getPosition();
+            d++;
         }
         DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<String>(input);
         positionSelect2.setModel(comboBoxModel);
@@ -1813,6 +1840,16 @@ public class Dasboard extends javax.swing.JFrame {
             }  else if (Objects.equals(String.valueOf(IDloginTxt.getText()), String.valueOf(employees[i].getID()))) {
                 System.out.println(PassowrdTxt.getPassword());
                 if (Objects.equals(String.valueOf(PassowrdTxt.getPassword()), String.valueOf(employees[i].getPassword()))) {
+                    usercheck = employees[Integer.parseInt(IDloginTxt.getText())-1].getPositionID();
+                    userAuth = employees[i].getID();
+                    UpdateInformation();
+                    try {
+                        UpdateInformationTable2();
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                    UpdateInformationProject();
+                    System.out.println(usercheck);
                     jLabel41.setVisible(false);
                     logginPanel.setVisible(false);
                     jButton1.setVisible(true);
@@ -1843,43 +1880,95 @@ public class Dasboard extends javax.swing.JFrame {
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
     }
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {
+        int row = jTable2.getSelectedRow();
+        row = savePositionProjectTable[row];
+        jLabel42.setText(projects[row].getName());
+        descriptionTxt.setText(projects[row].getDescription());
+        int d = 0;
+        for (int i=0; i < Employees.numberOfEmployees; i++){
+            if (employees[i].getPositionID() > usercheck) d++;
+        }
+        int j=0;
+        String input[] = new String[d+1];
+        Integer temp[] = new Integer[d+1];
+        input[0]="Tôi";
+        temp[0] = 0;
+        j++;
+        for (int i = 0; i < Employees.numberOfEmployees; i++) {
+            if (employees[i].getPositionID() > usercheck){
+                int x = i+1;
+                input[j]=x+" - "+employees[i].getName();
+                temp[j]=i;
+                j++;
+            }
+        }
+        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<String>(input);
+        devision.setModel(comboBoxModel);
+        StartProject.setText(projects[row].getDateStart());
+        EndPrject.setText(projects[row].getDateEnd());
+    }
+
+    private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+    }
     public static void UpdateInformation(){
         Employees.numberOfEmployees = 0;
+        numberOfSavePositionInformationTable = 0;
         employees = employee.AddEmployeesData();
         DefaultTableModel model = (DefaultTableModel) InformationTable.getModel();
         model.setRowCount(0);
         int d = 0;
         for (int i =0; i< Employees.numberOfEmployees; i++){
-            d = employees[i].getPositionID()-1;
-            model.addRow(new Object[]{
-                    employees[i].getID(),
-                    positions[d].getPosition(),
-                    employees[i].getName(),
-                    employees[i].getSex(),
-                    employees[i].getBirthday(),
-                    employees[i].getIDCard(),
-                    employees[i].getHometown(),
-                    employees[i].getPhone(),
-                    employees[i].getEmail(),
-                    employees[i].getTimeStart(),
-                    positions[d].getSalary()+" VND"
-            });
+            if (employees[i].getPositionID() > usercheck){
+                numberOfSavePositionInformationTable++;
+                savePositionInformationTable[numberOfSavePositionInformationTable-1] = i;
+                d = employees[i].getPositionID()-1;
+                model.addRow(new Object[]{
+                        employees[i].getID(),
+                        positions[d].getPosition(),
+                        employees[i].getName(),
+                        employees[i].getSex(),
+                        employees[i].getBirthday(),
+                        employees[i].getIDCard(),
+                        employees[i].getHometown(),
+                        employees[i].getPhone(),
+                        employees[i].getEmail(),
+                        employees[i].getTimeStart(),
+                        positions[d].getSalary()+" VND"
+                });
+            }
         }
     }
     public static void UpdateInformationTable2() throws FileNotFoundException {
+        position.numberOfPositionID = 0;
         salaries = salaryController.AddsalaryData();
         positions = positionController.AddPositionData();
-
+        numberOfSavePositionSalaryTable = 0;
         DefaultTableModel model2 = (DefaultTableModel) jTable1.getModel();
         model2.setRowCount(0);
         int d = 0;
         for (int i =0; i< salary.salaryIDs; i++){
             for (int j=0; j< Employees.numberOfEmployees; j++) {
-                if (salaries[i].getEmployeeID() == employees[j].getID()) {
+                if (salaries[i].getEmployeeID() == employees[j].getID() && usercheck < employees[j].getPositionID()) {
+                    savePositionSalaryTable[numberOfSavePositionSalaryTable]=j;
+                    numberOfSavePositionSalaryTable++;
                     d = employees[j].getPositionID()-1;
                     int staticSalary = positions[d].getSalary();
-                    int TotalSalary = salaryController.CaculatorTotalSalary(staticSalary, salaries[i].getDayWork(),salaries[i].getOvertimes(), salaries[i].getSmallProject(), salaries[i].getNormalProject(), salaries[i].getBigProject());
-                    int RemainSalary = salaryController.CaculatorRemainSalary(staticSalary, salaries[i].getPaidSalary(), salaries[i].getDayWork(), salaries[i].getOvertimes(), salaries[i].getSmallProject(), salaries[i].getNormalProject(), salaries[i].getBigProject());
+                    int TotalSalary = salaryController.CaculatorTotalSalary(staticSalary,
+                            salaries[i].getDayWork(),
+                            salaries[i].getOvertimes(),
+                            salaries[i].getSmallProject(),
+                            salaries[i].getNormalProject(),
+                            salaries[i].getBigProject());
+                    int RemainSalary = salaryController.CaculatorRemainSalary(staticSalary,
+                            salaries[i].getPaidSalary(),
+                            salaries[i].getDayWork(),
+                            salaries[i].getOvertimes(),
+                            salaries[i].getSmallProject(),
+                            salaries[i].getNormalProject(),
+                            salaries[i].getBigProject());
                     model2.addRow(new Object[]{
                             employees[j].getName(),
                             salaries[i].getDayWork(),
@@ -1896,27 +1985,40 @@ public class Dasboard extends javax.swing.JFrame {
         }
     }
     public static void UpdateInformationProject(){
+        Project.numberOfProject = 0;
         projects = projectController.AddProjectData();
+        numberOfSaveProjectTable = 0;
         salaries = salaryController.AddsalaryData();
         DefaultTableModel model3 = (DefaultTableModel) jTable2.getModel();
         model3.setRowCount(0);
-        int d = 0;
+        System.out.println(Project.numberOfProject);
         for (int i =0; i< Project.numberOfProject; i++){
-            for (int j=0; j< Employees.numberOfEmployees; j++) {
-                if (projects[i].getEmployeeID() == employees[j].getID()) {
-                    d = employees[j].getPositionID()-1;
-                    model3.addRow(new Object[]{
-                            projects[i].getID(),
-                            projects[i].getName(),
-                            projects[i].getDescription(),
-                            projects[i].getEmployeeID(),
-                            projects[i].getDateStart(),
-                            projects[i].getDateEnd(),
-                            projects[i].getStatus(),
-                            projects[i].getDone(),
-                            projects[i].getKindOfProject()
-                    });
-                }
+            savePositionProjectTable[numberOfSaveProjectTable]=i;
+            numberOfSaveProjectTable++;
+
+            String temp = "";
+            if (projects[i].getStatus()==0) temp="Chưa hoàn thành";
+            else if (projects[i].getStatus()==1) temp="Đã hoàn thành";
+            if (projects[i].getEmployeeID() == userAuth) {
+                model3.addRow(new Object[]{
+                        projects[i].getID(),
+                        projects[i].getName(),
+                        projects[i].getDescription(),
+                        projects[i].getEmployeeID(),
+                        projects[i].getDateStart(),
+                        projects[i].getDateEnd(),
+                        temp,
+                });
+            } else if (projects[i].getToEmployeeID() == userAuth) {
+                model3.addRow(new Object[]{
+                        projects[i].getID(),
+                        projects[i].getName(),
+                        projects[i].getDescription(),
+                        projects[i].getEmployeeID(),
+                        projects[i].getDateStart(),
+                        projects[i].getDateEnd(),
+                        temp,
+                });
             }
         }
     }
@@ -1955,11 +2057,6 @@ public class Dasboard extends javax.swing.JFrame {
                 Home.setVisible(true);
                 logginPanel.setVisible(true);
                 UpdateInformation();
-                try {
-                    UpdateInformationTable2();
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
                 setupLogin();
             }
         });

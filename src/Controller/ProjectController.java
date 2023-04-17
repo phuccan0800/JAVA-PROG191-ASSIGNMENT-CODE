@@ -29,11 +29,12 @@ public class ProjectController implements SimpleController{
                             dataget[1],
                             Integer.parseInt(dataget[2]),
                             Integer.parseInt(dataget[3]),
-                            dataget[4],
+                            Integer.parseInt(dataget[4]),
                             dataget[5],
                             dataget[6],
-                            Integer.parseInt(dataget[7]),
-                            Integer.parseInt(dataget[8]));
+                            dataget[7],
+                            Integer.parseInt(dataget[8]),
+                            Integer.parseInt(dataget[9]));
                     i++;
                 } catch (NullPointerException e) {
                     System.out.println("Lỗi lấy dữ liệu");
@@ -42,7 +43,7 @@ public class ProjectController implements SimpleController{
                 JOptionPane.showMessageDialog(null, "LỖI NHẬP DỮ LIỆU PROJECTs !! CÓ VẺ NHƯ DỮ LIỆU CỦA BẠN BỊ LỖI, HÃY KIỂM TRA");
             }
         }
-        System.out.println("Đọc dữ liệu thành công !");
+        System.out.println("Đọc dữ liệu Proejct thành công !");
         return projects;
     }
     @Override

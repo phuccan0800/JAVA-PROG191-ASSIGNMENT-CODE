@@ -8,6 +8,7 @@ public class Project {
     String Name;
     int EmployeeID;
     int kindOfProject;
+    int toEmployeeID;
     String Description;
     String DateStart;
     String DateEnd;
@@ -15,11 +16,13 @@ public class Project {
     int done;
     public Project(){}
 
-    public Project(int ID, String name, int employeeID, int kindOfProject,String description, String dateStart, String dateEnd, int status, int done) {
+    public Project(int ID, String name, int employeeID, int kindOfProject,int toEmployeeID, String description, String dateStart, String dateEnd, int status, int done) {
+        numberOfProject++;
         this.ID = ID;
         Name = name;
         EmployeeID = employeeID;
         this.kindOfProject = kindOfProject;
+        this.toEmployeeID = toEmployeeID;
         Description = description;
         DateStart = dateStart;
         DateEnd = dateEnd;
@@ -105,5 +108,13 @@ public class Project {
 
     public void setDescription(String description) {
         Description = description;
+    }
+
+    public int getToEmployeeID() {
+        return toEmployeeID;
+    }
+
+    public void setToEmployeeID(int toEmployeeID) {
+        this.toEmployeeID = toEmployeeID;
     }
 }
