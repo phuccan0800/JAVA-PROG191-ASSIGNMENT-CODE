@@ -1476,10 +1476,11 @@ public class Dasboard extends javax.swing.JFrame {
         jPanel3.setVisible(true);
         int row = 0;
         row = InformationTable.getSelectedRow();
+        row = savePositionInformationTable[row];
         System.out.println("o day "+numberOfSavePositionInformationTable);
         for (int i=0; i<numberOfSavePositionInformationTable; i++) System.out.println(savePositionInformationTable[i]);
-        nameTxt.setText(employees[savePositionInformationTable[row]].getName());
-        if (Objects.equals(employees[savePositionInformationTable[row]].getSex(), "Male")) {
+        nameTxt.setText(employees[row].getName());
+        if (Objects.equals(employees[row].getSex(), "Male")) {
             sex.setSelectedIndex(0);
         }
         else sex.setSelectedIndex(1);
@@ -1576,7 +1577,8 @@ public class Dasboard extends javax.swing.JFrame {
             try {
                 int row = 0;
                 row = InformationTable.getSelectedRow();
-                File file = new File("Employees.txt");
+                row = savePositionInformationTable[row];
+                File file = new File("Employee.txt");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
                 String line;
                 int lineCount = 1;
@@ -1610,78 +1612,35 @@ public class Dasboard extends javax.swing.JFrame {
                 BufferedWriter bufferedWriter = new BufferedWriter(writer);
                 bufferedWriter.write(stringBuilder.toString());
                 bufferedWriter.close();
-                JOptionPane.showMessageDialog(null, "Add dữ liệu thành công");
+                JOptionPane.showMessageDialog(null, "Thay đổi dữ liệu thành công");
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Lỗi khi chỉnh sửa dữ liệu Employees!!");
                 e.printStackTrace();
+            } catch (ArrayIndexOutOfBoundsException e){
+                JOptionPane.showMessageDialog(null, "VUI LÒNG CHỌN HÀNG CẦN CHỈNH SỬA!!");
             }
             UpdateInformation();
         }
     }
 
     private void DeleteInformationButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        int respone = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thay đổi ? ","Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int respone = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa? ","Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (respone == JOptionPane.YES_OPTION){
             try {
                 int row = 0;
-                row = InformationTable.getSelectedRow()+1;
+                row = InformationTable.getSelectedRow();
+                row = savePositionInformationTable[row]+1;
                 employee.DeleteInformation(row);
                 salaryController.DeleteInformation(row);
                 UpdateInformation();
                 UpdateInformationTable2();
             } catch (Exception e){
-                JOptionPane.showMessageDialog(null, "LỖI KHI XÓA !!");
+                JOptionPane.showMessageDialog(this, "LỖI KHI XÓA !!");
             }
         }
     }
 
     private void EditInformationButtonMouseClicked(java.awt.event.MouseEvent evt) {
-        int respone = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thay đổi ? ","Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (respone == JOptionPane.YES_OPTION){
-            try {
-                int row = 0;
-                row = InformationTable.getSelectedRow();
-                File file = new File("Employees.txt");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-                String line;
-                int lineCount = 1;
-                StringBuilder stringBuilder = new StringBuilder();
-                while ((line = reader.readLine()) != null) {
-                    if (lineCount-1 == row) {
-                        int d = 0;
-                        line = line.replace(employees[row].getName(), nameTxt.getText());
-                        line = line.replace(employees[row].getBirthday(), BirthdayTxt.getText());
-                        line = line.replace(employees[row].getSex(), String.valueOf(sex.getSelectedItem()));
-                        line = line.replace(employees[row].getIDCard(), CardIDTxt.getText());
-                        line = line.replace(employees[row].getHometown(), hometownTxt.getText());
-                        line = line.replace(employees[row].getPhone(), phoneTxt.getText());
-                        line = line.replace(employees[row].getEmail(), EmailTxt.getText());
-                        for (int i=0; i<position.numberOfPositionID; i++){
-                            String temp = String.valueOf(positionSelect.getSelectedItem());
-                            if (temp == positions[i].getPosition()){
-                                d = positions[i].getPositionID();
-                            }
-                        }
-                        line = line.replace(String.valueOf(employees[row].getPositionID()), String.valueOf(d));
-
-                    }
-                    stringBuilder.append(line);
-                    stringBuilder.append("\n");
-                    lineCount++;
-                }
-                reader.close();
-
-                FileWriter writer = new FileWriter(file);
-                BufferedWriter bufferedWriter = new BufferedWriter(writer);
-                bufferedWriter.write(stringBuilder.toString());
-                bufferedWriter.close();
-                JOptionPane.showMessageDialog(null, "Add dữ liệu thành công");
-            } catch (IOException e) {
-                System.out.println("An error occurred while updating data in file.");
-                e.printStackTrace();
-            }
-            UpdateInformation();
-        }
     }
 
     private void BirthdayTxtActionPerformed(java.awt.event.ActionEvent evt) {

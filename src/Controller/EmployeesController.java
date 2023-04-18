@@ -4,6 +4,7 @@ import Data.Employees;
 
 import javax.swing.*;
 import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +17,7 @@ public class EmployeesController implements SimpleController {
         Employees[] employees = new Employees[1000];
         int i = 0;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        File file = new File("Employees.txt");
+        File file = new File("Employee.txt");
         Scanner scnr = null;
         try {
             scnr = new Scanner(file);
@@ -61,49 +62,48 @@ public class EmployeesController implements SimpleController {
     public void AddInformation(String Information) throws IOException {
         FileWriter fileWriter = null;
         try {
-            fileWriter = new FileWriter("Employees.txt", true);
+            fileWriter = new FileWriter("Employee.txt", true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.print("\n"+Information);
+        printWriter.print(Information+"\n");
         printWriter.close();
         fileWriter.close();
     }
 
     @Override
     public void DeleteInformation(int numberOfline) {
-        System.out.println(numberOfline);
-        String fileName = "Employees.txt";
-        File inputFile = new File(fileName);
-        File tempFile = new File("temp.txt");
-
+        File file = new File("Employee.txt");
         try {
-            FileReader fileReader = new FileReader(inputFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            FileWriter fileWriter = new FileWriter(tempFile);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            int i = 1;
+            // Tạo một đối tượng BufferedReader để đọc dữ liệu từ tệp
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            // Tạo một đối tượng BufferedWriter để ghi dữ liệu vào tệp
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
+
+            // Đếm số dòng đã đọc được
+            int lineNumber = 0;
+
+            // Đọc từng dòng của tệp
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (i!=numberOfline && i==1) {
-                    bufferedWriter.write(line);
-                    i++;
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                System.out.println(line);
+                // Nếu dòng hiện tại không phải là dòng cần xóa, ghi dòng đó vào tệp
+                if (lineNumber != numberOfline) {
+                    writer.write(line);
+                    writer.newLine();
                 }
-                else if (i!=numberOfline){
-                    bufferedWriter.write("\n");
-                    bufferedWriter.write(line);
-                    i++;
-                } else i++;
             }
-            bufferedReader.close();
-            bufferedWriter.close();
-            fileReader.close();
-            fileWriter.close();
-            inputFile.delete();
-            tempFile.renameTo(inputFile);
-        } catch (Exception e) {
-            System.out.println("Đã xảy ra lỗi khi xóa dòng khỏi tệp " + fileName);
+
+            // Đóng đối tượng BufferedReader và BufferedWriter
+            reader.close();
+            writer.close();
+
+            System.out.println("Đã xóa dòng " + numberOfline + " và ghi lại dữ liệu vào tệp Employee.txt.");
+        } catch (IOException e) {
+            System.out.println("Đã xảy ra lỗi: " + e.getMessage());
         }
     }
 }
