@@ -20,7 +20,12 @@ public class Employees{
     int status;
     public Employees(){}
 
-    public Employees(int ID, int positionID, String name,String sex, Date birthday, String hometown,String IDCard , String phone, String email, Date timeStart, String password, int status) {
+    public Employees(int ID, int positionID,
+                     String name,String sex,
+                     Date birthday, String hometown,
+                     String IDCard , String phone,
+                     String email, Date timeStart,
+                     String password, int status) {
         numberOfEmployees++;
         this.ID = ID;
         this.sex = sex;

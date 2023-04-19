@@ -1,8 +1,6 @@
 package Controller;
-
 import Data.Employees;
 import Data.salary;
-
 import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -26,7 +24,13 @@ public class SalaryController implements SimpleController {
             try {
                 String data = scnr.nextLine();
                 String[] dataget = data.split("\\|");
-                salaries[i] = new salary(Integer.parseInt(dataget[0]), Integer.parseInt(dataget[1]), Integer.parseInt(dataget[2]), Integer.parseInt(dataget[3]), Integer.parseInt(dataget[4]), Integer.parseInt(dataget[5]),Integer.parseInt(dataget[6]));
+                salaries[i] = new salary(Integer.parseInt(dataget[0]),
+                        Integer.parseInt(dataget[1]),
+                        Integer.parseInt(dataget[2]),
+                        Integer.parseInt(dataget[3]),
+                        Integer.parseInt(dataget[4]),
+                        Integer.parseInt(dataget[5]),
+                        Integer.parseInt(dataget[6]));
                 i++;
             }catch (ArrayIndexOutOfBoundsException e){
                 JOptionPane.showMessageDialog(null, "LỖI NHẬP DỮ LIỆU SALARY !! CÓ VẺ NHƯ DỮ LIỆU CỦA BẠN BỊ LỖI, HÃY KIỂM TRA");

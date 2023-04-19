@@ -1,13 +1,8 @@
 package Controller;
 
 import Data.Employees;
-import Data.position;
-
 import javax.swing.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,7 +39,11 @@ public class EmployeesController implements SimpleController {
                         System.out.println("Vui lòng kiểm tra lại tệp");
                     }
                     try {
-                        employees[i] = new Employees(Integer.parseInt(dataget[0]),Integer.parseInt(dataget[1]), dataget[2], dataget[3], birthday, dataget[5], dataget[6], dataget[7], dataget[8], timeStart, dataget[10], Integer.parseInt(dataget[11]));
+                        employees[i] = new Employees(Integer.parseInt(dataget[0]),
+                                Integer.parseInt(dataget[1]),
+                                dataget[2], dataget[3], birthday, dataget[5],
+                                dataget[6], dataget[7], dataget[8], timeStart,
+                                dataget[10], Integer.parseInt(dataget[11]));
                         i++;
                     } catch (NullPointerException e) {
                         System.out.println("Lỗi lấy dữ liệu");

@@ -1,10 +1,5 @@
 package Data;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
-import java.util.Scanner;
-
 public class position {
     public static int numberOfPositionID = 0;
     int positionID = 0;
@@ -17,15 +12,11 @@ public class position {
         this.positionName = position;
         this.salary = salary;
     }
-
-    public position() {
-
-    }
+    public position() {}
 
     public int getPositionID() {
         return positionID;
     }
-
     public void setPositionID(int positionID) {
         this.positionID = positionID;
     }
