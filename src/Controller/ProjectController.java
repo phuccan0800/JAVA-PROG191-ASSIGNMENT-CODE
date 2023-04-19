@@ -78,7 +78,7 @@ public class ProjectController implements SimpleController{
         int lineCount = 1;
         StringBuilder stringBuilder = new StringBuilder();
         while ((line = reader.readLine()) != null) {
-            if (lineCount - 1 == row) {
+            if (lineCount == row) {
                 String[] dataget = line.split("\\|");
                 dataget[4] = String.valueOf(toEmployeeID);
                 dataget[8] = String.valueOf(status);

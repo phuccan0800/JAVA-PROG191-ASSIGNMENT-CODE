@@ -2303,7 +2303,7 @@ public class Dasboard extends javax.swing.JFrame {
             if (employees[i].getPositionID() > usercheck) d++;
         }
         int row = jTable2.getSelectedRow();
-        int row2 = savePositionProjectTable[row+1];
+        int row2 = savePositionProjectTable[row]+1;
         try {
             int checkbox = 0;
             if (jCheckBox1.isSelected()) checkbox =1;
@@ -2588,7 +2588,7 @@ public class Dasboard extends javax.swing.JFrame {
             numberOfSaveProjectTable++;
 
             String temp = "";
-            if (projects[i].getStatus()==0) temp="Chưa hoàn thành";
+            if (projects[i].getStatus()==2) temp="Chưa hoàn thành";
             else if (projects[i].getStatus()==1) temp="Đã hoàn thành";
             if (projects[i].getEmployeeID() == userAuth) {
                 model3.addRow(new Object[]{

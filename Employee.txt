@@ -6,3 +6,5 @@
 6|3|Hoàng Xuân Hưng|Female|12/02/2002|Huế|123134123|30923819|dkfjk29@gmail.com|12/02/2002|password|1
 7|2|Hoàng Xuân Đạt|Female|02/06/2003|Đà Nẵng|1231d12|091238711|dsh029@gmail.com|02/06/2003|password|0
 8|3|Nguyễn Hải Việt|Male|24/02/2002|Đà Nẵng|13x12313|12938891|jhfhhjhh@gnauk.com|24/02/2002|password|1
+9|2|Trà Quang Duy|Female|12/04/2002|Đà Nẵng|3210498320|918239218|asdjdhsadh|12/04/2002|password|0
+10|3|Tester|Male|12/02/2021|osdsdfds|10292138|sdlfjhsl|dsfsdfsdf|12/02/2021|password|0
