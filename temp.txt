@@ -1,4 +1,0 @@
-1|1|Trương Tấn Phúc|Male|12/05/2003|Quảng Bình|123819283|0916430598|phuccan0800@gmail.com|12/05/2021|password
-2|2|Nguyễn Quang Ngọc|Male|12/05/2003|Quảng Bình|12391289372|0916430598|ngn@gmail.com|12/05/2021|password
-3|1|Nguyễn Trần Khánh Vinh|Female|01/06/2003|Lệ Thủy, Quảng Bình|0916410598|1911890117|phuccan0800@gmail.com|11/05/1011|password
-4|3|Trương Tấn Minh|Female|12/01/2000|Lệ Thủy, Quảng Bình|123812341|091267127|phuccan0800@gmail.com|12/01/2000|password

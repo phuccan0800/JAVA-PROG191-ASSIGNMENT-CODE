@@ -1,11 +1,11 @@
 package Controller;
 
+import Data.Employees;
 import Data.Project;
+import Data.salary;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class ProjectController implements SimpleController{
@@ -38,6 +38,8 @@ public class ProjectController implements SimpleController{
                     i++;
                 } catch (NullPointerException e) {
                     System.out.println("Lỗi lấy dữ liệu");
+                }catch (NumberFormatException e){
+                    throw new RuntimeException(e);
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 JOptionPane.showMessageDialog(null, "LỖI NHẬP DỮ LIỆU PROJECTs !! CÓ VẺ NHƯ DỮ LIỆU CỦA BẠN BỊ LỖI, HÃY KIỂM TRA");
@@ -53,11 +55,44 @@ public class ProjectController implements SimpleController{
 
     @Override
     public void AddInformation(String Information) throws IOException {
-
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter("project.txt", true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.print("\n"+Information);
+        printWriter.close();
+        fileWriter.close();
     }
 
     @Override
     public void DeleteInformation(int line) {
 
+    }
+    public Project[] upload(int toEmployeeID, int status, int done, int row, Project[] projects) throws IOException {
+        File file = new File("project.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+        String line;
+        int lineCount = 1;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            if (lineCount - 1 == row) {
+                String[] dataget = line.split("\\|");
+                dataget[4] = String.valueOf(toEmployeeID);
+                dataget[8] = String.valueOf(status);
+                dataget[9] = String.valueOf(done);
+                line = String.join("|", dataget);
+            }
+            stringBuilder.append(line + "\n");
+            lineCount++;
+        }
+        reader.close();
+        FileWriter writer = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.close();
+        return projects;
     }
 }

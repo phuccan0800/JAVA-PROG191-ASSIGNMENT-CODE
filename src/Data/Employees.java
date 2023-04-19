@@ -17,9 +17,10 @@ public class Employees{
     Date TimeStart;
     String avatar;
     String password;
+    int status;
     public Employees(){}
 
-    public Employees(int ID, int positionID, String name,String sex, Date birthday, String hometown,String IDCard , String phone, String email, Date timeStart, String password) {
+    public Employees(int ID, int positionID, String name,String sex, Date birthday, String hometown,String IDCard , String phone, String email, Date timeStart, String password, int status) {
         numberOfEmployees++;
         this.ID = ID;
         this.sex = sex;
@@ -33,6 +34,7 @@ public class Employees{
         TimeStart = timeStart;
         this.avatar = "img/"+Integer.toString(ID)+".png";
         this.password = password;
+        this.status = status;
     }
 
     public int getPositionID() {
@@ -123,6 +125,14 @@ public class Employees{
 
     public String getAvatar() {
         return avatar;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public void setAvatar(String avatar) {

@@ -5,6 +5,8 @@ import Data.salary;
 
 import javax.swing.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.Scanner;
 
 public class SalaryController implements SimpleController {
@@ -61,36 +63,42 @@ public class SalaryController implements SimpleController {
 
     @Override
     public void DeleteInformation(int numberOfline) {
-        String fileName = "salary.txt";
-        File inputFile = new File(fileName);
-        File tempFile = new File("temp2.txt");
-
+        File file = new File("salary.txt");
         try {
-            FileReader fileReader = new FileReader(inputFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            FileWriter fileWriter = new FileWriter(tempFile);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            int i = 1;
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (i!=numberOfline && i==1) {
-                    bufferedWriter.write(line);
-                    i++;
-                }
-                else if (i!=numberOfline){
-                    bufferedWriter.write("\n");
-                    bufferedWriter.write(line);
-                    i++;
-                }else i++;
+            List<String> lines = Files.readAllLines(file.toPath());
+            lines.remove(numberOfline - 1);
+            FileWriter writer = new FileWriter(file);
+            for (String line : lines) {
+                writer.write(line + System.lineSeparator());
             }
-            bufferedReader.close();
-            bufferedWriter.close();
-            fileReader.close();
-            fileWriter.close();
-            inputFile.delete();
-            tempFile.renameTo(inputFile);
+            writer.close();
+            System.out.println("Đã xóa và ghi lại dữ liệu vào tệp "+file+" thành công!");
+
         } catch (IOException e) {
-            System.out.println("Đã xảy ra lỗi khi xóa dòng khỏi tệp " + fileName);
+            System.out.println("Đã xảy ra lỗi: " + e.getMessage());
         }
+    }
+    public Employees[] DayPlus(int dayPlus, int row, salary[] salaries) throws IOException {
+        File file = new File("salary.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+        String line;
+        int lineCount = 1;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            if (lineCount - 1 == row) {
+                String[] dataget = line.split("\\|");
+                dataget[1] = String.valueOf(dayPlus);
+                line = String.join("|", dataget);
+            }
+            stringBuilder.append(line + "\n");
+            lineCount++;
+        }
+        reader.close();
+
+        FileWriter writer = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.close();
+        return salaries;
     }
 }

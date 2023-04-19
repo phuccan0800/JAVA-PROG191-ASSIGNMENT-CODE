@@ -1,5 +1,8 @@
-1|1|Trương Tấn Phúc|Male|12/05/2003|Quảng Bình|123819283|0916430598|phuccan0800@gmail.com|12/05/2021|password
-2|2|Nguyễn Quang Ngọc|Male|12/05/2003|Quảng Bình|12391289372|0916430598|ngn@gmail.com|12/05/2021|password
-3|1|Nguyễn Trần Khánh Vinh|Female|01/06/2003|Lệ Thủy, Quảng Bình|0916410598|1911890117|phuccan0800@gmail.com|11/05/1011|password
-4|3|Trương Tấn Minh|Female|12/01/2000|Lệ Thủy, Quảng Bình|123812341|091267127|phuccan0800@gmail.com|12/01/2000|password
-5|2|Trương Tấn Hoàng|Male|12/01/2012|Quảng Bình|1123129821|0916430598|123123@gmail.com|12/01/2012|password
+1|1|Trương Tấn Phúc|Male|12/05/2003|Quảng Bình|123819283|0916430598|phuccan0800@gmail.com|12/05/2021|admin|1
+2|2|Nguyễn Quang Ngọc|Male|12/05/2003|Quảng Bình|12391289372|0916430598|ngn@gmail.com|12/05/2021|password|1
+3|1|Nguyễn Trần Khánh Vinh|Female|01/06/2003|Lệ Thủy, Quảng Bình|0916410598|1911890117|phuccan0800@gmail.com|11/05/1011|password|1
+4|3|Trương Tấn Minh|Female|12/01/2000|Lệ Thủy, Quảng Bình|123812341|091267127|phuccan0800@gmail.com|12/01/2000|password|0
+5|3|Hoàng Tấn Minh|Male|12/02/2021|Lệ Thủy, Quảng Bình|129382191|09123821|pchucasdh@gmail.com|12/02/2021|password|1
+6|3|Hoàng Xuân Hưng|Female|12/02/2002|Huế|123134123|30923819|dkfjk29@gmail.com|12/02/2002|password|1
+7|2|Hoàng Xuân Đạt|Female|02/06/2003|Đà Nẵng|1231d12|091238711|dsh029@gmail.com|02/06/2003|password|0
+8|3|Nguyễn Hải Việt|Male|24/02/2002|Đà Nẵng|13x12313|12938891|jhfhhjhh@gnauk.com|24/02/2002|password|1

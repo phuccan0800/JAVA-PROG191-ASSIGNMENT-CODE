@@ -1,15 +1,17 @@
 package Controller;
 
 import Data.Employees;
+import Data.position;
 
 import javax.swing.*;
 import java.io.*;
-import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-import java.nio.file.Files;
 
 public class EmployeesController implements SimpleController {
     public Employees[] AddEmployeesData(){
@@ -28,29 +30,29 @@ public class EmployeesController implements SimpleController {
             try {
                 String data = scnr.nextLine();
                 String[] dataget = data.split("\\|");
-                String dateBirthday = dataget[4];
-                String dateTimeStart = dataget[9];
-                Date birthday = null;
-                Date timeStart = null;
-                try {
-                    birthday = dateFormat.parse(dateBirthday);
-                    timeStart = dateFormat.parse(dateTimeStart);
-                } catch (ParseException e) {
-                    System.out.println("Lỗi ở đây");
-                } catch (NullPointerException e) {
-                    System.out.println("Vui lòng kiểm tra lại tệp");
-                }
-                try {
-                    employees[i] = new Employees(Integer.parseInt(dataget[0]),Integer.parseInt(dataget[1]), dataget[2], dataget[3], birthday, dataget[5], dataget[6], dataget[7], dataget[8], timeStart, dataget[10]);
-                    i++;
-                } catch (NullPointerException e) {
-                    System.out.println("Lỗi lấy dữ liệu");
-                }
+
+                    String dateBirthday = dataget[4];
+                    String dateTimeStart = dataget[9];
+                    Date birthday = null;
+                    Date timeStart = null;
+                    try {
+                        birthday = dateFormat.parse(dateBirthday);
+                        timeStart = dateFormat.parse(dateTimeStart);
+                    } catch (ParseException e) {
+                        System.out.println("Lỗi khi chuyển đổi định dạng dữ liệu");
+                    } catch (NullPointerException e) {
+                        System.out.println("Vui lòng kiểm tra lại tệp");
+                    }
+                    try {
+                        employees[i] = new Employees(Integer.parseInt(dataget[0]),Integer.parseInt(dataget[1]), dataget[2], dataget[3], birthday, dataget[5], dataget[6], dataget[7], dataget[8], timeStart, dataget[10], Integer.parseInt(dataget[11]));
+                        i++;
+                    } catch (NullPointerException e) {
+                        System.out.println("Lỗi lấy dữ liệu");
+                    }
             }catch (ArrayIndexOutOfBoundsException e){
                 JOptionPane.showMessageDialog(null, "LỖI NHẬP DỮ LIỆU EMPLOYEES !! CÓ VẺ NHƯ DỮ LIỆU CỦA BẠN BỊ LỖI, HÃY KIỂM TRA");
             }
         }
-        System.out.println("Đọc dữ liệu thành công !");
         return employees;
     }
     public void EditInformation(){
@@ -67,43 +69,59 @@ public class EmployeesController implements SimpleController {
             throw new RuntimeException(e);
         }
         PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.print(Information+"\n");
+        printWriter.print("\n"+Information);
         printWriter.close();
         fileWriter.close();
     }
+    public Employees[] Delete(int row, Employees[] employees) throws IOException {
+        File file = new File("Employee.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+        String line;
+        int lineCount = 1;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            if (lineCount - 1 == row) {
+                String[] dataget = line.split("\\|");
+                dataget[11] = "0";
+                line = String.join("|", dataget);
+            }
+            stringBuilder.append(line + "\n");
+            lineCount++;
+        }
+        reader.close();
 
+        FileWriter writer = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.close();
+        JOptionPane.showMessageDialog(null, "Thay đổi dữ liệu thành công");
+        return employees;
+    }
     @Override
     public void DeleteInformation(int numberOfline) {
+    }
+    public Employees[] EditPassword(String newPassword, int row, Employees[] employees) throws IOException {
         File file = new File("Employee.txt");
-        try {
-            // Tạo một đối tượng BufferedReader để đọc dữ liệu từ tệp
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-
-            // Tạo một đối tượng BufferedWriter để ghi dữ liệu vào tệp
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
-
-            // Đếm số dòng đã đọc được
-            int lineNumber = 0;
-
-            // Đọc từng dòng của tệp
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lineNumber++;
-                System.out.println(line);
-                // Nếu dòng hiện tại không phải là dòng cần xóa, ghi dòng đó vào tệp
-                if (lineNumber != numberOfline) {
-                    writer.write(line);
-                    writer.newLine();
-                }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+        String line;
+        int lineCount = 1;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            if (lineCount-1 == row) {
+                String[] dataget = line.split("\\|");
+                dataget[10] = newPassword;
+                line = String.join("|",dataget);
             }
-
-            // Đóng đối tượng BufferedReader và BufferedWriter
-            reader.close();
-            writer.close();
-
-            System.out.println("Đã xóa dòng " + numberOfline + " và ghi lại dữ liệu vào tệp Employee.txt.");
-        } catch (IOException e) {
-            System.out.println("Đã xảy ra lỗi: " + e.getMessage());
+            stringBuilder.append(line+"\n");
+            lineCount++;
         }
+        reader.close();
+
+        FileWriter writer = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.close();
+        JOptionPane.showMessageDialog(null, "Thay đổi dữ liệu thành công");
+        return employees;
     }
 }
