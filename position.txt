@@ -1,3 +1,4 @@
 CEO|3000000
 Manager|300000
 Staff|100000
+Newbie|0

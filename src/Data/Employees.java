@@ -1,6 +1,7 @@
 package Data;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Employees{
@@ -17,6 +18,7 @@ public class Employees{
     Date TimeStart;
     String avatar;
     String password;
+    Date lastAttendanceDate;
     int status;
     public Employees(){}
 
@@ -25,7 +27,8 @@ public class Employees{
                      Date birthday, String hometown,
                      String IDCard , String phone,
                      String email, Date timeStart,
-                     String password, int status) {
+                     String password, int status,
+                     Date lastAttendanceDate) {
         numberOfEmployees++;
         this.ID = ID;
         this.sex = sex;
@@ -40,6 +43,7 @@ public class Employees{
         this.avatar = "img/"+Integer.toString(ID)+".png";
         this.password = password;
         this.status = status;
+        this.lastAttendanceDate = lastAttendanceDate;
     }
 
     public int getPositionID() {
@@ -130,6 +134,14 @@ public class Employees{
 
     public String getAvatar() {
         return avatar;
+    }
+
+    public Date getLastAttendanceDate() {
+        return lastAttendanceDate;
+    }
+
+    public void setLastAttendanceDate(Date lastAttendanceDate) {
+        this.lastAttendanceDate = lastAttendanceDate;
     }
 
     public int getStatus() {

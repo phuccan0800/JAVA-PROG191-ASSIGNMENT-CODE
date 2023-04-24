@@ -1,10 +1,13 @@
 package Controller;
 
 import Data.Employees;
+import Data.salary;
+
 import javax.swing.*;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -25,14 +28,16 @@ public class EmployeesController implements SimpleController {
             try {
                 String data = scnr.nextLine();
                 String[] dataget = data.split("\\|");
-
                     String dateBirthday = dataget[4];
                     String dateTimeStart = dataget[9];
+                    String datelastAttendanceDate = dataget[12];
                     Date birthday = null;
                     Date timeStart = null;
+                    Date lastAttendanceDate = null;
                     try {
                         birthday = dateFormat.parse(dateBirthday);
                         timeStart = dateFormat.parse(dateTimeStart);
+                        lastAttendanceDate = dateFormat.parse(datelastAttendanceDate);
                     } catch (ParseException e) {
                         System.out.println("Lỗi khi chuyển đổi định dạng dữ liệu");
                     } catch (NullPointerException e) {
@@ -43,7 +48,7 @@ public class EmployeesController implements SimpleController {
                                 Integer.parseInt(dataget[1]),
                                 dataget[2], dataget[3], birthday, dataget[5],
                                 dataget[6], dataget[7], dataget[8], timeStart,
-                                dataget[10], Integer.parseInt(dataget[11]));
+                                dataget[10], Integer.parseInt(dataget[11]), lastAttendanceDate);
                         i++;
                     } catch (NullPointerException e) {
                         System.out.println("Lỗi lấy dữ liệu");
@@ -68,7 +73,7 @@ public class EmployeesController implements SimpleController {
             throw new RuntimeException(e);
         }
         PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.print("\n"+Information);
+        printWriter.print(Information+"\n");
         printWriter.close();
         fileWriter.close();
     }
@@ -94,6 +99,32 @@ public class EmployeesController implements SimpleController {
         bufferedWriter.write(stringBuilder.toString());
         bufferedWriter.close();
         JOptionPane.showMessageDialog(null, "Thay đổi dữ liệu thành công");
+        return employees;
+    }
+    public Employees[] savelastAttendance(Employees[] employees,int row) throws IOException {
+        File file = new File("Employee.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+        String line;
+        int lineCount = 1;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            if (lineCount - 1 == row) {
+                System.out.println(employees[row].getLastAttendanceDate());
+                String[] dataget = line.split("\\|");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String dateString = sdf.format(employees[row].getLastAttendanceDate());
+                dataget[12] = dateString;
+                line = String.join("|", dataget);
+            }
+            stringBuilder.append(line + "\n");
+            lineCount++;
+        }
+        reader.close();
+
+        FileWriter writer = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.close();
         return employees;
     }
     @Override

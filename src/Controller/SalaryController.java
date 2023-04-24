@@ -60,7 +60,7 @@ public class SalaryController implements SimpleController {
     public void AddInformation(String Information) throws IOException {
         FileWriter fileWriter = new FileWriter("salary.txt", true);
         PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.print("\n"+Information);
+        printWriter.print(Information+"\n");
         printWriter.close();
         fileWriter.close();
     }
@@ -82,7 +82,7 @@ public class SalaryController implements SimpleController {
             System.out.println("Đã xảy ra lỗi: " + e.getMessage());
         }
     }
-    public Employees[] DayPlus(int dayPlus, int row, salary[] salaries) throws IOException {
+    public salary[] DayPlus(int dayPlus, int row, salary[] salaries) throws IOException {
         File file = new File("salary.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
         String line;
@@ -92,6 +92,30 @@ public class SalaryController implements SimpleController {
             if (lineCount - 1 == row) {
                 String[] dataget = line.split("\\|");
                 dataget[1] = String.valueOf(dayPlus);
+                line = String.join("|", dataget);
+            }
+            stringBuilder.append(line + "\n");
+            lineCount++;
+        }
+        reader.close();
+
+        FileWriter writer = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.close();
+        return salaries;
+    }
+    public  salary[] updatesalary(salary[] salaries, int salaryInput, int row) throws IOException {
+        File file = new File("salary.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+        String line;
+        int lineCount = 1;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            if (lineCount - 1 == row) {
+                String[] dataget = line.split("\\|");
+                int salarynew = salaryInput + Integer.parseInt(dataget[6]);
+                dataget[6] = String.valueOf(salarynew);
                 line = String.join("|", dataget);
             }
             stringBuilder.append(line + "\n");
