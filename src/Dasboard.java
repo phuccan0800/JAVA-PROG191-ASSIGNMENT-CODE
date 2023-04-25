@@ -2270,7 +2270,8 @@ public class Dasboard extends javax.swing.JFrame {
                             + phoneTxt2.getText() + "|"
                             + EmailTxt2.getText() + "|"
                             + formattedDate + "|"
-                            + "password|1";
+                            + "password|1" + "|"
+                            + formattedDate;
                     salaryData = String.valueOf(employees[Employees.numberOfEmployees - 1].getID() + 1) + "|0|0|0|0|0|0";
                     try {
                         employee.AddInformation(employeesData);
